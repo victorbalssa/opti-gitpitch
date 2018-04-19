@@ -1,120 +1,75 @@
-# White
+# Bomberman extended
 
-### A GitPitch Presentation Template
-
----
-
-## Tips!
-
-<br>
-
-@fa[arrows gp-tip](Press F to go Fullscreen)
-
-@fa[microphone gp-tip](Press S for Speaker Notes)
+### Step 2: Memory optimization
 
 ---
 
-## Template Features
+## Before optimization
 
-- Code Presenting |
-- Repo Source, Static Blocks, GIST |
-- Custom CSS Styling |
-- Slideshow Background Image |
-- Slide-specific Background Images |
-- Custom Logo, TOC, and Footnotes |
+### commit d3d8539e478e11f3ec46cfd4be8db16b840eeda9
 
----?code=sample/go/server.go&lang=golang&title=Golang File
-
-@[1,3-6](Present code found within any repo source file.)
-@[8-18](Without ever leaving your slideshow.)
-@[19-28](Using GitPitch code-presenting with (optional) annotations.)
+---?image=assets/image/before-opti.jpg
 
 ---
 
-@title[JavaScript Block]
+@title[C Code before optimization]
 
-<p><span class="slide-title">JavaScript Block</span></p>
 
-```javascript
-// Include http module.
-var http = require("http");
-
-// Create the server. Function passed as parameter
-// is called on every request made.
-http.createServer(function (request, response) {
-  // Attach listener on end event.  This event is
-  // called when client sent, awaiting response.
-  request.on("end", function () {
-    // Write headers to the response.
-    // HTTP 200 status, Content-Type text/plain.
-    response.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    // Send data and end response.
-    response.end('Hello HTTP!');
-  });
-
-// Listen on the 8080 port.
-}).listen(8080);
+```c
+	if (!(buff = my_str_to_wordtab(response[2], ';')))
+		return ;
+	for (int i = 0; i < MAP_SIZE; ++i) {
+		if (!(buff2 = my_str_to_wordtab(buff[i], ':')))
+			return ;
+		for (int j = 0; j < MAP_SIZE; ++j) {
+			g->map[i][j].data = buff2[j];
+		}
+	}
+	free_wordtab(buff2, MAP_SIZE + 1);
+	free_wordtab(buff, MAP_SIZE + 1);
+	free_wordtab(response, 3);
 ```
 
-@[1,2](You can present code inlined within your slide markdown too.)
-@[9-17](Displayed using code-syntax highlighting just like your IDE.)
-@[19-20](Again, all of this without ever leaving your slideshow.)
-
----?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
-
-@[23](You can even present code found within any GitHub GIST.)
-@[41-53](GIST source code is beautifully rendered on any slide.)
-@[57-62](And code-presenting works seamlessly for GIST too, both online and offline.)
+@[1,2](get first table from server response)
+@[3,9](update map from response data but without freeing old data)
+@[10,12](freeing rest of table)
 
 ---
 
-## Template Help
+---
 
-- [Code Presenting](https://github.com/gitpitch/gitpitch/wiki/Code-Presenting)
-  + [Repo Source](https://github.com/gitpitch/gitpitch/wiki/Code-Delimiter-Slides), [Static Blocks](https://github.com/gitpitch/gitpitch/wiki/Code-Slides), [GIST](https://github.com/gitpitch/gitpitch/wiki/GIST-Slides) 
-- [Custom CSS Styling](https://github.com/gitpitch/gitpitch/wiki/Slideshow-Custom-CSS)
-- [Slideshow Background Image](https://github.com/gitpitch/gitpitch/wiki/Background-Setting)
-- [Slide-specific Background Images](https://github.com/gitpitch/gitpitch/wiki/Image-Slides#background)
-- [Custom Logo](https://github.com/gitpitch/gitpitch/wiki/Logo-Setting) [TOC](https://github.com/gitpitch/gitpitch/wiki/Table-of-Contents) [Footnotes](https://github.com/gitpitch/gitpitch/wiki/Footnote-Setting)
+@title[C Code after optimization]
+
+
+```c
+	if (!(buff = my_str_to_wordtab(response[2], ';')))
+		return ;
+	for (int i = 0; i < MAP_SIZE; ++i) {
+		if (!(buff2 = my_str_to_wordtab(buff[i], ':')))
+			return ;
+		for (int j = 0; j < MAP_SIZE; ++j) {
+			tmp_swap = g->map[i][j].data;
+			g->map[i][j].data = buff2[j];
+			buff2[j] = tmp_swap;
+		}
+		free_wordtab(buff2, MAP_SIZE + 1);
+	}
+	free_wordtab(buff, MAP_SIZE + 1);
+	free_wordtab(response, 3);
+```
+
+@[1,2](get first table from server response)
+@[3,12](update map from response data and swapping pointer with tmp_sawp to free old data)
+@[13,14](freeing rest of table)
 
 ---
 
-## Go GitPitch Pro!
+## After optimization
 
-<br>
-<div class="left">
-    <i class="fa fa-user-secret fa-5x" aria-hidden="true"> </i><br>
-    <a href="https://gitpitch.com/pro-features" class="pro-link">
-    More details here.</a>
-</div>
-<div class="right">
-    <ul>
-        <li>Private Repos</li>
-        <li>Private URLs</li>
-        <li>Password-Protection</li>
-        <li>Image Opacity</li>
-        <li>SVG Image Support</li>
-    </ul>
-</div>
+### commit 59180f1db6fb6ac49509eefff0c870181bb813fe
+
+---?image=assets/image/after-opti.jpp
 
 ---
 
-### Questions?
-
-<br>
-
-@fa[twitter gp-contact](@gitpitch)
-
-@fa[github gp-contact](gitpitch)
-
-@fa[medium gp-contact](@gitpitch)
-
----?image=assets/image/gitpitch-audience.jpg&opacity=100
-
-@title[Download this Template!]
-
-### <span class="white">Get your presentation started!</span>
-### [Download this template @fa[external-link gp-download]](https://gitpitch.com/template/download/white)
-
+## Question ? Live test ?
