@@ -8,6 +8,7 @@
 body {
   background: #fff;
   background-color: #fff;
+  font-family: monospace;
 }
 
 html:-webkit-full-screen-ancestor {
