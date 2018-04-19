@@ -8,11 +8,11 @@
 
 ### commit d3d8539e478e11f3ec46cfd4be8db16b840eeda9
 
----?image=assets/image/before-opti.jpg
+![after-opti](assets/image/before-opti.jpg)
 
 ---
 
-@title[C Code before optimization]
+## C Code before optimization
 
 
 ```c
@@ -31,15 +31,12 @@
 ```
 
 @[1,2](get first table from server response)
-@[3,9](update map from response data but without freeing old data)
-@[10,12](freeing rest of table)
+@[3-9](update map from response data but without freeing old data)
+@[10-12](freeing rest of table)
 
 ---
 
----
-
-@title[C Code after optimization]
-
+## C Code after optimization
 
 ```c
 	if (!(buff = my_str_to_wordtab(response[2], ';')))
@@ -59,8 +56,8 @@
 ```
 
 @[1,2](get first table from server response)
-@[3,12](update map from response data and swapping pointer with tmp_sawp to free old data)
-@[13,14](freeing rest of table)
+@[3-12](update map from response data and swapping pointer with tmp_sawp to free old data)
+@[13-14](freeing rest of table)
 
 ---
 
@@ -68,7 +65,7 @@
 
 ### commit 59180f1db6fb6ac49509eefff0c870181bb813fe
 
----?image=assets/image/after-opti.jpp
+![after-opti](assets/image/after-opti.jpg)
 
 ---
 
