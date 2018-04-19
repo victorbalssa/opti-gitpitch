@@ -8,7 +8,9 @@
 
 ### commit d3d8539e478e11f3ec46cfd4be8db16b840eeda9
 
-![after-opti](assets/image/before-opti.jpg&size=auto 60%)
+---
+
+---?image=assets/image/before-opti.jpg&size=75% 75%
 
 ---
 
@@ -65,7 +67,9 @@
 
 ### commit 59180f1db6fb6ac49509eefff0c870181bb813fe
 
-![after-opti](assets/image/after-opti.jpg&size=auto 60%)
+---
+
+---?image=assets/image/after-opti.jpg&size=75% 75%
 
 ---
 
